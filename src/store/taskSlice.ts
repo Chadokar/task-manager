@@ -10,6 +10,7 @@ export interface Task {
   dueDate: string;
   priority: Priority;
   completed: boolean;
+  status?: Status;
 }
 
 interface TaskState {
@@ -22,7 +23,16 @@ interface TaskState {
 
 const loadTasksFromStorage = (): Task[] => {
   const savedTasks = localStorage.getItem("tasks");
-  return savedTasks ? JSON.parse(savedTasks) : [];
+  return savedTasks
+    ? JSON.parse(savedTasks).map((task: Task) => {
+        const taskStatus: Status = task.completed
+          ? "completed"
+          : new Date(task.dueDate) < new Date()
+          ? "overdue"
+          : "upcoming";
+        return { ...task, status: taskStatus };
+      })
+    : [];
 };
 
 const initialState: TaskState = {
@@ -51,7 +61,19 @@ const taskSlice = createSlice({
         (task) => task.id === action.payload.id
       );
       if (index !== -1) {
-        state.tasks[index] = action.payload;
+        // state.tasks[index].status = state.tasks[index].completed
+        //   ? "completed"
+        //   : new Date(state.tasks[index].dueDate) < new Date()
+        //   ? "overdue"
+        //   : "upcoming";
+        state.tasks[index] = {
+          ...action.payload,
+          status: action.payload.completed
+            ? "completed"
+            : new Date(action.payload.dueDate) < new Date()
+            ? "overdue"
+            : "upcoming",
+        };
         localStorage.setItem("tasks", JSON.stringify(state.tasks));
       }
     },
@@ -63,6 +85,11 @@ const taskSlice = createSlice({
       const task = state.tasks.find((task) => task.id === action.payload);
       if (task) {
         task.completed = !task.completed;
+        task.status = task.completed
+          ? "completed"
+          : new Date(task.dueDate) < new Date()
+          ? "overdue"
+          : "upcoming";
         localStorage.setItem("tasks", JSON.stringify(state.tasks));
       }
     },

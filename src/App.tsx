@@ -23,13 +23,9 @@ function App() {
           task.description.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesPriority =
           priorityFilter === "all" || task.priority === priorityFilter;
-        const taskStatus: Status = task.completed
-          ? "completed"
-          : new Date(task.dueDate) < new Date()
-          ? "overdue"
-          : "upcoming";
+
         const matchesStatus =
-          statusFilter === "all" || taskStatus === statusFilter;
+          statusFilter === "all" || task.status === statusFilter;
 
         return matchesSearch && matchesPriority && matchesStatus;
       })

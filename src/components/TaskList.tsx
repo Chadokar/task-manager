@@ -18,6 +18,12 @@ function TaskList({ tasks, onEditTask }: TaskListProps) {
     High: "bg-red-100 text-red-800",
   };
 
+  const taskColors = {
+    upcoming: "bg-blue-100 text-blue-800",
+    overdue: "bg-red-100 text-red-800",
+    completed: "bg-green-100 text-green-800",
+  };
+
   return (
     <motion.div className="space-y-4 overflow-y-auto h-full">
       {tasks.map((task) => (
@@ -45,16 +51,16 @@ function TaskList({ tasks, onEditTask }: TaskListProps) {
                 </motion.button>
                 <h3
                   className={`text-lg sm:text-xl font-semibold ${
-                    task.completed
-                      ? "line-through text-gray-500"
-                      : "text-gray-900"
+                    task.completed ? " text-gray-400" : "text-gray-900"
                   }`}
                 >
                   {task.title}
                 </h3>
                 <span
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    priorityColors[task.priority]
+                  className={`px-3 py-1 rounded-full text-sm font-medium pb-1.5 ${
+                    task.completed
+                      ? "bg-gray-200 text-gray-500"
+                      : priorityColors[task.priority]
                   }`}
                 >
                   {task.priority}
@@ -63,9 +69,19 @@ function TaskList({ tasks, onEditTask }: TaskListProps) {
               <p className="mt-3 text-gray-600 text-sm sm:text-base">
                 {task.description}
               </p>
-              <p className="mt-2 text-sm text-gray-500">
-                Due: {new Date(task.dueDate).toLocaleDateString()}
-              </p>
+              <div className="flex items-center gap-4 mt-4">
+                {!task.completed && (
+                  <p className="text-sm text-gray-500 text-center h-full flex">
+                    Due: {new Date(task.dueDate).toLocaleDateString()}
+                  </p>
+                )}
+                <span
+                  className={`px-3 py-1 rounded-full text-sm font-medium capitalize pb-1.5
+                    ${taskColors[task.status!]}`}
+                >
+                  {task.status}
+                </span>
+              </div>
             </div>
             <div className="flex gap-2 sm:gap-4 self-start sm:self-auto">
               <motion.button
