@@ -130,6 +130,7 @@ function AddTaskModal({ isOpen, onClose, editingTask }: AddTaskModalProps) {
                 { value: "Medium", label: "Medium" },
                 { value: "High", label: "High" },
               ]}
+              up={true}
             />
           </div>
           <motion.button

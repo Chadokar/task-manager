@@ -11,9 +11,15 @@ type CustomSelectProps = {
   selected: string;
   onChange: (value: string) => void;
   options: Option[];
+  up?: boolean;
 };
 
-function CustomSelect({ selected, onChange, options }: CustomSelectProps) {
+function CustomSelect({
+  selected,
+  onChange,
+  options,
+  up = false,
+}: CustomSelectProps) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -52,7 +58,9 @@ function CustomSelect({ selected, onChange, options }: CustomSelectProps) {
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 5 }}
-          className="absolute bottom-full mb-2 w-full bg-white shadow-lg rounded-xl border border-gray-200 z-10"
+          className={`absolute ${
+            up ? `bottom-full mb-2` : "mt-2"
+          }  w-full bg-white shadow-lg rounded-xl border border-gray-200 z-10`}
         >
           {options.map((option) => (
             <li
