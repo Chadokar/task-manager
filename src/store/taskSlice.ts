@@ -52,6 +52,7 @@ const taskSlice = createSlice({
         id: crypto.randomUUID(),
         ...action.payload,
         completed: false,
+        status: "upcoming",
       };
       state.tasks.push(newTask);
       localStorage.setItem("tasks", JSON.stringify(state.tasks));

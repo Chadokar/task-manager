@@ -21,12 +21,20 @@ function AddTaskModal({ isOpen, onClose, editingTask }: AddTaskModalProps) {
     description: editingTask?.description || "",
     dueDate: editingTask?.dueDate || "",
     priority: editingTask?.priority || ("Medium" as Priority),
+    status: editingTask?.status || "upcoming",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (editingTask) {
-      dispatch(updateTask({ ...editingTask, ...newTask }));
+      dispatch(
+        updateTask({
+          ...editingTask,
+          ...newTask,
+          status:
+            new Date(newTask.dueDate) < new Date() ? "overdue" : "upcoming",
+        })
+      );
     } else {
       dispatch(addTask(newTask));
     }
