@@ -49,10 +49,10 @@ function CustomSelect({ selected, onChange, options }: CustomSelectProps) {
       </button>
       {open && (
         <motion.ul
-          initial={{ opacity: 0, y: -5 }}
+          initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -5 }}
-          className="absolute w-full mt-2 bg-white shadow-lg rounded-xl border border-gray-200 z-10"
+          exit={{ opacity: 0, y: 5 }}
+          className="absolute bottom-full mb-2 w-full bg-white shadow-lg rounded-xl border border-gray-200 z-10"
         >
           {options.map((option) => (
             <li
