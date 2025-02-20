@@ -88,7 +88,8 @@ function TaskList({ tasks, onEditTask }: TaskListProps) {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => onEditTask(task)}
-                className="p-2 text-gray-600 hover:text-indigo-600 transition-colors"
+                className="p-2 text-gray-600 hover:text-indigo-600 transition-colors disabled:opacity-50"
+                disabled={task.completed}
               >
                 <Edit2 size={20} />
               </motion.button>
