@@ -4,8 +4,6 @@
 
 Task Manager is a React-based application designed to help users organize their tasks efficiently. It allows users to add, edit, search, filter, and sort tasks based on priority and status.
 
-<!-- write this: for answer to the technical question go to question.md -->
-
 ### techical question answer link
 
 [Technical Question Answer](questions.md)
